@@ -1,0 +1,39 @@
+# 潟湖水域分割配置文件
+
+# 数据配置
+data:
+  input_size: [512, 512]
+  batch_size: 8
+  num_workers: 4
+  train_split: 0.8
+  val_split: 0.1
+  test_split: 0.1
+
+# 模型配置
+model:
+  name: "unet"
+  backbone: "resnet34"
+  num_classes: 2  # 背景和水域
+  pretrained: true
+
+# 训练配置
+training:
+  epochs: 100
+  learning_rate: 0.001
+  weight_decay: 1e-4
+  scheduler: "cosine"
+  early_stopping_patience: 10
+
+# 数据增强
+augmentation:
+  horizontal_flip: true
+  vertical_flip: true
+  rotation: 15
+  brightness_contrast: 0.2
+  elastic_transform: true
+
+# 输出配置
+output:
+  save_dir: "results"
+  save_frequency: 10
+  visualize: true
