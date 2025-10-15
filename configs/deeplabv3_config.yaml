@@ -1,0 +1,41 @@
+# DeepLabV3+模型配置文件
+
+# 模型配置
+model:
+  name: deeplabv3
+  n_classes: 2  # 背景和潟湖水域
+  params:
+    backbone: resnet50  # resnet50 或 resnet101
+    pretrained: true
+
+# 数据配置
+data:
+  train_images: data/processed/train/images
+  train_masks: data/processed/train/masks
+  val_images: data/processed/val/images
+  val_masks: data/processed/val/masks
+  image_size: 512
+  
+# 训练配置
+training:
+  batch_size: 4  # DeepLabV3+显存占用较大
+  num_workers: 4
+  epochs: 100
+  learning_rate: 0.0001  # 预训练模型使用较小的学习率
+  weight_decay: 0.0001
+  
+  # 优化器: Adam, SGD, AdamW
+  optimizer: AdamW
+  
+  # 学习率调度器: ReduceLROnPlateau, CosineAnnealingLR, StepLR
+  scheduler: ReduceLROnPlateau
+  
+  # 损失函数: CrossEntropyLoss, DiceLoss, CombinedLoss
+  criterion: CombinedLoss
+
+# 输出配置
+output_dir: results/deeplabv3_experiment
+
+# 其他配置
+seed: 42
+
